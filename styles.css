@@ -57,9 +57,12 @@ ul {
     padding: 0;
 }
 
-li {
+.reminder-item {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
+}
+
+.reminder-item:last-child {
+    border-bottom: none;
 }

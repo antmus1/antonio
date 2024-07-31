@@ -41,7 +41,13 @@ function displayReminders() {
         })
         .forEach(reminder => {
             const listItem = document.createElement('li');
-            listItem.textContent = `${reminder.date} ${reminder.time ? reminder.time : ''} - ${reminder.location ? reminder.location : ''} - ${reminder.text}`;
+            listItem.innerHTML = `
+                <strong>Data:</strong> ${reminder.date} <br>
+                <strong>Orario:</strong> ${reminder.time ? reminder.time : 'N/A'} <br>
+                <strong>Luogo:</strong> ${reminder.location ? reminder.location : 'N/A'} <br>
+                <strong>Testo:</strong> ${reminder.text}
+            `;
+            listItem.classList.add('reminder-item');
             reminderItems.appendChild(listItem);
         });
 }

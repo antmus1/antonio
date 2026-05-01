@@ -1,0 +1,266 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --border: #e0e0e0;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-text: #ffffff;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --header-h: 52px;
+  --toolbar-h: 44px;
+  --status-h: 28px;
+  --splitter-w: 5px;
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ── Top Bar ── */
+.topbar {
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.logo { font-weight: 700; font-size: 16px; white-space: nowrap; }
+.filename-label {
+  font-size: 13px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+  height: var(--toolbar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.toolbar-group { display: flex; align-items: center; gap: 4px; }
+.toolbar-right { margin-left: auto; }
+.page-label { font-size: 13px; color: var(--muted); min-width: 60px; text-align: center; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+.btn:hover { background: var(--bg); border-color: #c0c0c0; }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-icon { padding: 6px 8px; }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+
+/* ── Main ── */
+#main {
+  height: calc(100vh - var(--header-h) - var(--toolbar-h) - var(--status-h));
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Drop Zone ── */
+.drop-zone {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.drop-zone.drag-over { background: #eff6ff; }
+.drop-zone-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 48px;
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+}
+.drop-zone-inner svg { opacity: 0.4; }
+.drop-zone-inner h2 { font-size: 18px; font-weight: 600; color: var(--text); }
+.drop-zone-inner p { font-size: 14px; }
+
+/* ── Split View ── */
+.split-view {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+  min-width: 200px;
+}
+#left-panel { flex: 0 0 50%; }
+
+.panel-header {
+  height: 36px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.panel-body {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* ── Splitter ── */
+.splitter {
+  width: var(--splitter-w);
+  background: var(--border);
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.splitter:hover, .splitter.dragging { background: var(--accent); }
+
+/* ── PDF Panel ── */
+#pdf-panel-body {
+  display: flex;
+  justify-content: center;
+  background: #525659;
+}
+#page-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* ── Markdown Panel ── */
+.md-preview {
+  line-height: 1.7;
+  color: var(--text);
+}
+.md-preview h1, .md-preview h2, .md-preview h3,
+.md-preview h4, .md-preview h5, .md-preview h6 {
+  margin: 1.2em 0 0.5em;
+  line-height: 1.3;
+}
+.md-preview h1 { font-size: 1.6em; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; }
+.md-preview h2 { font-size: 1.3em; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
+.md-preview h3 { font-size: 1.1em; }
+.md-preview p { margin: 0.7em 0; }
+.md-preview ul, .md-preview ol { padding-left: 1.5em; margin: 0.5em 0; }
+.md-preview li { margin: 0.3em 0; }
+.md-preview table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: 13px; }
+.md-preview th, .md-preview td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+}
+.md-preview th { background: var(--bg); font-weight: 600; }
+.md-preview tr:nth-child(even) td { background: #fafafa; }
+.md-preview code { background: var(--bg); padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
+.md-preview pre { background: #1e1e1e; color: #d4d4d4; padding: 12px 16px; border-radius: var(--radius); overflow: auto; margin: 0.8em 0; }
+.md-preview pre code { background: none; padding: 0; color: inherit; }
+.md-preview blockquote { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); margin: 0.8em 0; }
+.md-preview img { max-width: 100%; border-radius: var(--radius); }
+.md-preview hr { border: none; border-top: 1px solid var(--border); margin: 1.2em 0; }
+
+.md-raw {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  background: transparent;
+}
+
+/* ── Streaming cursor ── */
+.cursor { display: inline-block; width: 2px; height: 1em; background: var(--accent); animation: blink 1s step-start infinite; vertical-align: text-bottom; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.empty-state { color: var(--muted); font-size: 13px; text-align: center; margin-top: 40px; }
+
+/* ── Status Bar ── */
+.statusbar {
+  height: var(--status-h);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.progress-wrap { flex: 1; max-width: 200px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; width: 0%; }
+
+.muted { color: var(--muted); }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1a1a1a;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
